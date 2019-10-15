@@ -19,6 +19,7 @@ protected:
 
 public:
 	Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* texture, Game* game);
+	~Bow();
 
 	void render();
 	void update();

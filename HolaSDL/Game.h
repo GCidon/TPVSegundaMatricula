@@ -16,7 +16,7 @@ const int WIN_WIDTH = 800;
 const int WIN_HEIGHT = 600;
 const int NUM_TEXTURES = 6;
 const string RUTA = "..\\images\\";
-const uint32_t FRAME_RATE = 5;
+const uint32_t FRAME_RATE = 30;
 const double speed = 10;
 
 class Game
@@ -28,6 +28,7 @@ protected:
 	int puntuacion;
 	Texture* texturas_[NUM_TEXTURES];
 	Bow* bow_;
+	Balloon* background_;
 	vector<Arrow*> arrows_;
 	vector<Balloon*> balloons_;
 

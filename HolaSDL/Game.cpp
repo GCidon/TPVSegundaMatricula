@@ -10,13 +10,16 @@ Game::Game() {
 		texturas_[i] = new Texture(renderer_, (RUTA + atributes_[i].nombre), atributes_[i].row, atributes_[i].col);
 	}
 
-	bow_ = new Bow(Point2D(10, WIN_HEIGHT/2), 30, 60, Vector2D(0, 0), nullptr, texturas_[NLBow], this);
+	bow_ = new Bow(Point2D(10, WIN_HEIGHT/2), 60, 90, Vector2D(0, 0), nullptr, texturas_[NLBow], this);
+
+	background_ = new Balloon(Point2D(0, 0), WIN_WIDTH, WIN_HEIGHT, Vector2D(0, 0), texturas_[Background], this);
 
 	puntuacion = 0;
 }
 
 void Game::render() const {
 	SDL_RenderClear(renderer_);
+	background_->render();
 	bow_->render();
 	for each (auto arrow in arrows_) arrow->render();
 	for each (auto balloon in balloons_) balloon->render();
@@ -49,14 +52,13 @@ void Game::update() {
 	bow_->update();
 	for each (auto arrow in arrows_) arrow->update();
 	for each (auto balloon in balloons_) balloon->update();
-	if (balloons_.size() >= 10) cout << "mas de 10";
 	generate();
 }
 
 Game::~Game() {
 	for (int i = 0; i < NUM_TEXTURES; i++) delete texturas_[i];
 	delete bow_;
-
+	delete background_;
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
 	SDL_Quit();
@@ -66,6 +68,5 @@ void Game::generate() {
 	if (rand() % 100 - 1 <= 3) {
 		Balloon* balloon = new Balloon(Point2D(rand() % WIN_WIDTH - 20, WIN_HEIGHT-10), 50, 50, Vector2D(0, -speed), texturas_[Ballons], this);
 		balloons_.push_back(balloon);
-		cout << "Generated";
 	}
 }

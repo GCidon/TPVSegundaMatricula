@@ -2,16 +2,21 @@
 #include "Game.h"
 
 void Arrow::render() {
-	texture_->render(getRect());
-}
-
-SDL_Rect Arrow::getRect() {
 	SDL_Rect ret;
 	ret.x = pos_.x_;
 	ret.y = pos_.y_;
 	ret.w = texture_->getW();
 	ret.h = texture_->getH();
-	return ret;
+	texture_->render(ret);
+}
+
+SDL_Rect Arrow::getPunta() {
+	SDL_Rect punta;
+	punta.x = pos_.x_ + (texture_->getW() * 0.75);
+	punta.y = pos_.y_;
+	punta.w = texture_->getW() / 4;
+	punta.h = texture_->getH();
+	return punta;
 }
 
 void Arrow::setDir(Vector2D newdir) {

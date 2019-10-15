@@ -12,7 +12,7 @@ public:
 	Arrow(Point2D pos, Vector2D dir, Texture* texture) : pos_(pos), dir_(dir), texture_(texture) {}
 
 	void render();
-	SDL_Rect getRect();
+	SDL_Rect getPunta();
 	void setDir(Vector2D newdir);
 	bool update();
 };

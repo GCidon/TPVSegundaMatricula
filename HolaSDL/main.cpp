@@ -10,6 +10,7 @@ using namespace std;
 using uint = unsigned int;
 
 int main(int argc, char* argv[]){
+	//CrtSetDbgFlag(CRTDBG ALLOC MEM DF | CRTDBG LEAK CHECK DF);
 	Game* game = new Game();
 	game->run();
 	game->~Game();

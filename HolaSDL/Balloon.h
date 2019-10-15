@@ -17,6 +17,7 @@ protected:
 
 public:
 	Balloon(Point2D pos, double w, double h, Vector2D dir, Texture* texture, Game* game);
+	~Balloon();
 
 	void render();
 	bool update();

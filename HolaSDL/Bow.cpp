@@ -12,6 +12,12 @@ Bow::Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* t
 	else loaded = false;
 }
 
+Bow::~Bow() {
+	texture_ = nullptr;
+	game_ = nullptr;
+	loadedArrow_ = nullptr;
+}
+
 void Bow::render() {
 
 	SDL_Rect destRect;
@@ -21,12 +27,6 @@ void Bow::render() {
 	destRect.y = pos_.y_;
 
 	texture_->render(destRect);
-
-	cout << pos_.x_ << "\n";
-	cout << pos_.y_ << "\n";
-	if (loaded) cout << "Loaded\n";
-	else cout << "Not loaded\n";
-	system("CLS");
 }
 
 void Bow::setDir(Vector2D newdir) {
@@ -34,7 +34,7 @@ void Bow::setDir(Vector2D newdir) {
 }
 
 void Bow::update() {
-	if (pos_.y_ + dir_.getY()< WIN_HEIGHT && (pos_.y_ + dir_.getY() > 0))
+	if (pos_.y_ + dir_.getY()< WIN_HEIGHT-h_ && (pos_.y_ + dir_.getY() > 0))
 		pos_ = Point2D(pos_.x_ + dir_.getX(), pos_.y_ + dir_.getY());
 }
 
@@ -59,7 +59,7 @@ void Bow::handleEvents(SDL_Event const& evt) {
 void Bow::load() {
 	if (!loaded && loadedArrow_ == nullptr) {
 		loaded = true;
-		Arrow* newArrow = new Arrow(pos_, Vector2D(0,0), texture_);
+		loadedArrow_ = new Arrow(pos_, Vector2D(speed,0), texture_);
 	}
 }
 
