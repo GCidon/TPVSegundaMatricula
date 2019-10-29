@@ -23,6 +23,7 @@ private:
 
 public:
 	Balloon(Point2D pos, double w, double h, Vector2D dir, Texture* texture, Game* game);
+	~Balloon();
 
 	SDL_Rect getRect();
 	void render();

@@ -13,6 +13,12 @@ Bow::Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* t
 	loaded = false;
 }
 
+Bow::~Bow() {
+	texture_ = nullptr;
+	game_ = nullptr;
+	loadedArrow_ = nullptr;
+}
+
 void Bow::render() {
 
 	SDL_Rect destRect;
@@ -36,7 +42,7 @@ void Bow::setDir(Vector2D newdir) {
 }
 
 void Bow::update() {
-	if (pos_.y_ + dir_.getY()< WIN_HEIGHT && (pos_.y_ + dir_.getY() > 0))
+	if (pos_.y_ + dir_.getY()< WIN_HEIGHT-h_ && (pos_.y_ + dir_.getY() > 0))
 		pos_ = Point2D(pos_.x_ + dir_.getX(), pos_.y_ + dir_.getY());
 }
 
@@ -68,7 +74,7 @@ void Bow::load() {
 	}
 }
 
-// Dispara la flecha guardada y la añade al vector de flechas en pantalla
+// Dispara la flecha guardada y la aï¿½ade al vector de flechas en pantalla
 void Bow::shoot(vector<Arrow*>& arrows) {
 	if (loaded) {
 		loadedArrow_->setPos(Point2D(pos_.x_, pos_.y_ + h_/2));

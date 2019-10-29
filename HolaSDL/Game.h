@@ -33,6 +33,7 @@ private:
 	int puntuacion;
 	Texture* texturas_[NUM_TEXTURES];
 	Bow* bow_;
+	Balloon* background_;
 	vector<Arrow*> arrows_;
 	vector<Balloon*> balloons_;
 	ScoreBoard* score;

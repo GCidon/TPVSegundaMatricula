@@ -9,6 +9,11 @@ Balloon::Balloon(Point2D pos, double w, double h, Vector2D dir, Texture* texture
 	game_ = game;
 }
 
+Balloon::~Balloon() {
+	texture_ = nullptr;
+	game_ = nullptr;
+}
+
 void Balloon::render() {
 	SDL_Rect destRect;
 	destRect.w = w_;

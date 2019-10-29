@@ -2,10 +2,6 @@
 #include "Game.h"
 
 void Arrow::render() {
-	texture_->render(getRect());
-}
-
-SDL_Rect Arrow::getRect() {
 	SDL_Rect ret;
 	ret.x = pos_.x_;
 	ret.y = pos_.y_;
