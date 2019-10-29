@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include "checkML.h"
 
 struct Point2D {
 	double x_;
@@ -10,7 +11,7 @@ struct Point2D {
 
 class Vector2D
 {
-protected:
+private:
 	double x_;
 	double y_;
 

@@ -9,13 +9,26 @@ SDL_Rect Arrow::getRect() {
 	SDL_Rect ret;
 	ret.x = pos_.x_;
 	ret.y = pos_.y_;
-	ret.w = texture_->getW();
-	ret.h = texture_->getH();
+	ret.w = w_;
+	ret.h = h_;
+	return ret;
+}
+
+SDL_Rect Arrow::getHead() {
+	SDL_Rect ret;
+	ret.x = pos_.x_ + (w_ / 2);
+	ret.y = pos_.y_;
+	ret.w = w_ / 2;
+	ret.h = h_;
 	return ret;
 }
 
 void Arrow::setDir(Vector2D newdir) {
 	dir_ = newdir;
+}
+
+void Arrow::setPos(Point2D newpos) {
+	pos_ = newpos;
 }
 
 bool Arrow::update() {

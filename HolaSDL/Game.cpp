@@ -10,14 +10,25 @@ Game::Game() {
 		texturas_[i] = new Texture(renderer_, (RUTA + atributes_[i].nombre), atributes_[i].row, atributes_[i].col);
 	}
 
-	bow_ = new Bow(Point2D(10, WIN_HEIGHT/2), 30, 60, Vector2D(0, 0), nullptr, texturas_[NLBow], this);
+	flechasRect = SDL_Rect{ 50, 30, 25, 10 };
+	puntRect = SDL_Rect{ 100, 70, 100, 100 };
+
+	bow_ = new Bow(Point2D(10, WIN_HEIGHT / 2), 50, 80, Vector2D(0, 0), nullptr, texturas_[NLBow], texturas_[LBow], texturas_[Arrows], this);
+	score = new ScoreBoard(texturas_[Numbers], Point2D(WIN_WIDTH - 200, 20), 50, 50);
 
 	puntuacion = 0;
 }
 
-void Game::render() const {
+void Game::render() {
 	SDL_RenderClear(renderer_);
+	SDL_RenderCopy(renderer_, texturas_[Background]->getTexture(), NULL, NULL);
+	// Dibujo del numero de flechas disponibles
+	for (int i = 0; i < arrowsLeft; i++) {
+		flechasRect.x = 50 + 25 * i;
+		SDL_RenderCopyEx(renderer_, texturas_[Arrows]->getTexture(), NULL, &flechasRect, -90, NULL, SDL_FLIP_NONE);
+	}
 	bow_->render();
+	score->render();
 	for each (auto arrow in arrows_) arrow->render();
 	for each (auto balloon in balloons_) balloon->render();
 	SDL_RenderPresent(renderer_);
@@ -27,11 +38,17 @@ void Game::handleEvents() {
 	SDL_Event evt;
 	while (SDL_PollEvent(&evt) && !exit) {
 		if (evt.type == SDL_QUIT) exit = true;
-		bow_->handleEvents(evt);
+		if (bow_->handleEvents(evt, arrows_)) {
+			if(arrowsLeft>0)
+				arrowsLeft--;
+		}
 	}
 }
 
 void Game::run() {
+	cout << "Inserte su nombre: \n";
+	cin >> name;
+
 	uint32_t startTime, frameTime;
 	startTime = SDL_GetTicks();
 	while (!exit) {
@@ -43,19 +60,71 @@ void Game::run() {
 		}
 		render();
 	}
+
+	saveGame("scoreboard.txt");
 }
 
 void Game::update() {
 	bow_->update();
-	for each (auto arrow in arrows_) arrow->update();
-	for each (auto balloon in balloons_) balloon->update();
-	if (balloons_.size() >= 10) cout << "mas de 10";
+
+	auto arrow = arrows_.begin();
+	while (!arrows_.empty() && arrow != arrows_.end()) {
+		bool deleted = false;
+		Arrow* aux = *arrow;
+		if (aux->update()) {
+			arrows_.erase(arrow);
+			delete aux;
+			arrow = arrows_.begin();
+			deleted = true;
+			if (arrowsLeft <= 0 && arrows_.size() == 0)
+				exit = true;
+		}
+		if (!arrows_.empty() && !deleted) 
+			arrow++;
+	}
+
+	auto balloon = balloons_.begin();
+	while (!balloons_.empty() && balloon != balloons_.end()) {
+		bool deleted = false;
+		Balloon* aux = *balloon;
+		if (aux->update(arrows_)) {
+			if (aux->isHit()) score->addPunt(10);
+			balloons_.erase(balloon);
+			delete aux;
+			balloon = balloons_.begin();
+			deleted = true;
+		}
+		if (!balloons_.empty() && !deleted)
+			balloon++;
+	}
+
 	generate();
 }
 
 Game::~Game() {
 	for (int i = 0; i < NUM_TEXTURES; i++) delete texturas_[i];
 	delete bow_;
+	bow_ = nullptr;
+	delete score;
+	score = nullptr;
+
+	auto arrow = arrows_.begin();
+	while (arrow != arrows_.end()) {
+		Arrow* aux = *arrow;
+		arrows_.erase(arrow);
+		delete aux;
+		aux = nullptr;
+		arrow = arrows_.begin();
+	}
+
+	auto balloon = balloons_.begin();
+	while (!balloons_.empty() && balloon != balloons_.end()) {
+		Balloon* aux = *balloon;
+		balloons_.erase(balloon);
+		delete aux;
+		aux = nullptr;
+		balloon = balloons_.begin();
+	}
 
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
@@ -64,8 +133,38 @@ Game::~Game() {
 
 void Game::generate() {
 	if (rand() % 100 - 1 <= 3) {
-		Balloon* balloon = new Balloon(Point2D(rand() % WIN_WIDTH - 20, WIN_HEIGHT-10), 50, 50, Vector2D(0, -speed), texturas_[Ballons], this);
+		Balloon* balloon = new Balloon(Point2D(rand() % WIN_WIDTH - 50, WIN_HEIGHT-10), 100, 100, Vector2D(0, -speed), texturas_[Ballons], this);
 		balloons_.push_back(balloon);
-		cout << "Generated";
 	}
+}
+
+void Game::saveGame(string file) {
+
+	ifstream input;
+	input.open(file);
+	pair<string, int> punts[10];
+	for (int i = 0; i < 10; i++) {
+		input >> punts[i].first >> punts[i].second;
+	}
+	input.close();
+
+	ofstream out;
+	out.open(file);
+	bool written = false;
+	int i = 0;
+	while (i < 10) {
+		if (!written) {
+			if (score->getPunt() > punts[i].second) {
+				out << name << " " << score->getPunt() << "\n";
+				written = true;
+			}
+			else out << punts[i].first << " " << punts[i].second << "\n";
+		}
+		else {
+			out << punts[i - 1].first << " " << punts[i-1].second << "\n";
+		}
+		i++;
+	}
+	out.close();
+
 }

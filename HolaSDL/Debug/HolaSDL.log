@@ -1,12 +1,4 @@
-﻿  Balloon.cpp
-C:\Users\mxddx\Desktop\Practica1TPV\ProyectosSDL\HolaSDL\Balloon.cpp(13,15): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
-C:\Users\mxddx\Desktop\Practica1TPV\ProyectosSDL\HolaSDL\Balloon.cpp(14,15): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
-C:\Users\mxddx\Desktop\Practica1TPV\ProyectosSDL\HolaSDL\Balloon.cpp(15,19): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
-  Bow.cpp
-C:\Users\mxddx\Desktop\Practica1TPV\ProyectosSDL\HolaSDL\Balloon.cpp(16,19): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
-C:\Users\mxddx\Desktop\Practica1TPV\ProyectosSDL\HolaSDL\Bow.cpp(18,15): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
-C:\Users\mxddx\Desktop\Practica1TPV\ProyectosSDL\HolaSDL\Bow.cpp(19,15): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
-C:\Users\mxddx\Desktop\Practica1TPV\ProyectosSDL\HolaSDL\Bow.cpp(20,19): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
-  Generando código...
-C:\Users\mxddx\Desktop\Practica1TPV\ProyectosSDL\HolaSDL\Bow.cpp(21,19): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
-  HolaSDL.vcxproj -> C:\Users\mxddx\Desktop\Practica1TPV\ProyectosSDL\bin\HolaSDLDebug.exe
+﻿  Game.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\crtdbg.h(303,1): warning C4005:  '_malloca': redefinición de macro
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\malloc.h(122): message :  vea la definición anterior de '_malloca'
+  HolaSDL.vcxproj -> C:\Users\mxddx\Desktop\TPVSegundaMatricula\bin\HolaSDLDebug.exe

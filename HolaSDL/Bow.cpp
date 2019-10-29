@@ -2,31 +2,33 @@
 #include "Game.h"
 #include <iostream>
 
-Bow::Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* texture, Game* game) :
+Bow::Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* texture, Texture* textureL, Texture* arrowTex, Game* game) :
 	pos_(pos), w_(w), h_(h), dir_(dir) 
 {
 	loadedArrow_ = arrow;
 	texture_ = texture;
+	textureL_ = textureL;
+	arrowText_ = arrowTex;
 	game_ = game;
-	if (loadedArrow_ != nullptr) loaded = true;
-	else loaded = false;
+	loaded = false;
 }
 
 void Bow::render() {
 
 	SDL_Rect destRect;
-	destRect.w = w_;
+	
 	destRect.h = h_;
 	destRect.x = pos_.x_;
 	destRect.y = pos_.y_;
 
-	texture_->render(destRect);
-
-	cout << pos_.x_ << "\n";
-	cout << pos_.y_ << "\n";
-	if (loaded) cout << "Loaded\n";
-	else cout << "Not loaded\n";
-	system("CLS");
+	if (loaded) {
+		destRect.w = w_+20;
+		textureL_->render(destRect);
+	}
+	else {
+		destRect.w = w_;
+		texture_->render(destRect);
+	}
 }
 
 void Bow::setDir(Vector2D newdir) {
@@ -38,14 +40,16 @@ void Bow::update() {
 		pos_ = Point2D(pos_.x_ + dir_.getX(), pos_.y_ + dir_.getY());
 }
 
-void Bow::handleEvents(SDL_Event const& evt) {
+bool Bow::handleEvents(SDL_Event const& evt, vector<Arrow*>& arrows) {
+	bool aux = false;
 	if (evt.type == SDL_KEYDOWN) {
 		if (evt.key.keysym.sym == SDLK_DOWN) {
-			setDir(Vector2D(0, speed));
+			setDir(Vector2D(0, speed*2));
 		} else if (evt.key.keysym.sym == SDLK_UP) {
-			setDir(Vector2D(0, -speed));
+			setDir(Vector2D(0, -speed*2));
 		} else if (evt.key.keysym.sym == SDLK_RIGHT) {
-			shoot();
+			shoot(arrows);
+			aux = true;
 		} else if (evt.key.keysym.sym == SDLK_LEFT) {
 			load();
 		}
@@ -54,18 +58,23 @@ void Bow::handleEvents(SDL_Event const& evt) {
 		if (evt.key.keysym.sym == SDLK_UP || evt.key.keysym.sym == SDLK_DOWN)
 			setDir(Vector2D(0, 0));
 	}
+	return aux;
 }
 
 void Bow::load() {
 	if (!loaded && loadedArrow_ == nullptr) {
 		loaded = true;
-		Arrow* newArrow = new Arrow(pos_, Vector2D(0,0), texture_);
+		loadedArrow_ = new Arrow(pos_, 75, 20, Vector2D(0, 0), arrowText_);
 	}
 }
 
-void Bow::shoot() {
+// Dispara la flecha guardada y la añade al vector de flechas en pantalla
+void Bow::shoot(vector<Arrow*>& arrows) {
 	if (loaded) {
-		loadedArrow_->setDir(dir_);
+		loadedArrow_->setPos(Point2D(pos_.x_, pos_.y_ + h_/2));
+		loadedArrow_->setDir(Vector2D(speed*3, 0));
 		loaded = false;
+		arrows.push_back(loadedArrow_);
+		loadedArrow_ = nullptr;
 	}
 }

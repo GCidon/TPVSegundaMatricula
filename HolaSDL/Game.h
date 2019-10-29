@@ -2,12 +2,15 @@
 
 #include "SDL.h" // Windows
 #include "SDL_image.h" // Windows
+#include "checkML.h"
 #include "Texture.h"
 #include "Bow.h"
 #include "Balloon.h"
+#include "ScoreBoard.h"
 #include <string>
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -16,12 +19,14 @@ const int WIN_WIDTH = 800;
 const int WIN_HEIGHT = 600;
 const int NUM_TEXTURES = 6;
 const string RUTA = "..\\images\\";
-const uint32_t FRAME_RATE = 5;
+const uint32_t FRAME_RATE = 30;
 const double speed = 10;
 
 class Game
 {
-protected:
+private:
+	string name;
+
 	SDL_Window* window_ = nullptr;
 	SDL_Renderer* renderer_ = nullptr;
 	bool exit = false;
@@ -30,6 +35,12 @@ protected:
 	Bow* bow_;
 	vector<Arrow*> arrows_;
 	vector<Balloon*> balloons_;
+	ScoreBoard* score;
+
+	SDL_Rect flechasRect;
+	SDL_Rect puntRect;
+
+	int arrowsLeft = 10;
 
 	struct TexturesAtributes {
 		string nombre;
@@ -44,9 +55,10 @@ public:
 	Game();
 	~Game();
 	void run();
-	void render() const;
+	void render();
 	void update();
 	void handleEvents();
+	void saveGame(string file);
 };
 	
 	
