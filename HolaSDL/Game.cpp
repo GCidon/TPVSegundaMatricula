@@ -27,9 +27,9 @@ void Game::render() {
 		flechasRect.x = 50 + 25 * i;
 		SDL_RenderCopyEx(renderer_, texturas_[Arrows]->getTexture(), NULL, &flechasRect, -90, NULL, SDL_FLIP_NONE);
 	}
-	bow_->render();
+	bow_->render(renderer_);
 	score->render();
-	for each (auto arrow in arrows_) arrow->render();
+	for each (auto arrow in arrows_) arrow->render(renderer_);
 	for each (auto balloon in balloons_) balloon->render();
 	SDL_RenderPresent(renderer_);
 }

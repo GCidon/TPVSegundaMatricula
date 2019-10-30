@@ -13,13 +13,7 @@ Bow::Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* t
 	loaded = false;
 }
 
-Bow::~Bow() {
-	texture_ = nullptr;
-	game_ = nullptr;
-	loadedArrow_ = nullptr;
-}
-
-void Bow::render() {
+void Bow::render(SDL_Renderer* renderer) {
 
 	SDL_Rect destRect;
 	
@@ -29,11 +23,13 @@ void Bow::render() {
 
 	if (loaded) {
 		destRect.w = w_+20;
-		textureL_->render(destRect);
+		//textureL_->render(destRect);
+		SDL_RenderCopyEx(renderer, textureL_->getTexture(), NULL, &destRect, angle, NULL, SDL_FLIP_NONE);
 	}
 	else {
 		destRect.w = w_;
-		texture_->render(destRect);
+		//texture_->render(destRect);
+		SDL_RenderCopyEx(renderer, texture_->getTexture(), NULL, &destRect, angle, NULL, SDL_FLIP_NONE);
 	}
 }
 
@@ -58,6 +54,10 @@ bool Bow::handleEvents(SDL_Event const& evt, vector<Arrow*>& arrows) {
 			aux = true;
 		} else if (evt.key.keysym.sym == SDLK_LEFT) {
 			load();
+		} else if (evt.key.keysym.sym == SDLK_w) {
+			angle -= 5;
+		} else if (evt.key.keysym.sym == SDLK_s) {
+			angle += 5;
 		}
 	}
 	if (evt.type == SDL_KEYUP) {
@@ -70,7 +70,7 @@ bool Bow::handleEvents(SDL_Event const& evt, vector<Arrow*>& arrows) {
 void Bow::load() {
 	if (!loaded && loadedArrow_ == nullptr) {
 		loaded = true;
-		loadedArrow_ = new Arrow(pos_, 75, 20, Vector2D(0, 0), arrowText_);
+		loadedArrow_ = new Arrow(pos_, 75, 20, angle, Vector2D(0, 0), arrowText_);
 	}
 }
 
@@ -78,7 +78,8 @@ void Bow::load() {
 void Bow::shoot(vector<Arrow*>& arrows) {
 	if (loaded) {
 		loadedArrow_->setPos(Point2D(pos_.x_, pos_.y_ + h_/2));
-		loadedArrow_->setDir(Vector2D(speed*3, 0));
+		Vector2D shootAngle = Vector2D(speed * 3, angle).normalize();
+		loadedArrow_->setDir(shootAngle*speed);
 		loaded = false;
 		arrows.push_back(loadedArrow_);
 		loadedArrow_ = nullptr;

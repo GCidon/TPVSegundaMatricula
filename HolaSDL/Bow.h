@@ -20,15 +20,20 @@ private:
 	Texture* arrowText_;
 	Game* game_;
 	bool loaded;
+	double angle = 0;
 
 public:
 	Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* texture, Texture* textureL, Texture* arrowTex, Game* game);
 	~Bow() {
+		texture_ = nullptr;
+		textureL_ = nullptr;
+		arrowText_ = nullptr;
+		game_ = nullptr;
 		delete loadedArrow_;
 		loadedArrow_ = nullptr;
 	}
 
-	void render();
+	void render(SDL_Renderer* renderer);
 	void update();
 	void setDir(Vector2D newdir);
 	bool handleEvents(SDL_Event const& evt, vector<Arrow*>& arrows);

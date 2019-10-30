@@ -1,13 +1,13 @@
 #include "Arrow.h"
 #include "Game.h"
 
-void Arrow::render() {
+void Arrow::render(SDL_Renderer* renderer) {
 	SDL_Rect ret;
 	ret.x = pos_.x_;
 	ret.y = pos_.y_;
 	ret.w = w_;
 	ret.h = h_;
-	return ret;
+	SDL_RenderCopyEx(renderer, texture_->getTexture(), NULL, &ret, angle_, NULL, SDL_FLIP_NONE);
 }
 
 SDL_Rect Arrow::getHead() {
