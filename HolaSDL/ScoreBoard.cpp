@@ -1,7 +1,7 @@
 #include "ScoreBoard.h"
 
 // Coloca tres cifras en funcion de la puntuacion, por si supera 100 puntos
-void ScoreBoard::render() {
+void ScoreBoard::render(SDL_Renderer* renderer) {
 	SDL_Rect rectLL;
 	rectLL.w = w_;
 	rectLL.h = h_;

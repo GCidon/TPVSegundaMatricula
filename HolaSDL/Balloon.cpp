@@ -2,19 +2,12 @@
 #include "Game.h"
 
 Balloon::Balloon(Point2D pos, double w, double h, Vector2D dir, Texture* texture, Game* game) :
-	pos_(pos), w_(w), h_(h), dir_(dir)
+	ArrowsGameObject(pos, w, h, dir, texture, game)
 {
 	color = rand() % 7 - 1;
-	texture_ = texture;
-	game_ = game;
 }
 
-Balloon::~Balloon() {
-	texture_ = nullptr;
-	game_ = nullptr;
-}
-
-void Balloon::render() {
+void Balloon::render(SDL_Renderer* renderer) {
 	SDL_Rect destRect;
 	destRect.w = w_;
 	destRect.h = h_;
@@ -24,17 +17,8 @@ void Balloon::render() {
 	texture_->renderFrame(destRect, color, deadCount);
 }
 
-SDL_Rect Balloon::getRect() {
-	SDL_Rect ret;
-	ret.w = w_;
-	ret.h = h_;
-	ret.x = pos_.x_;
-	ret.y = pos_.y_;
-	return ret;
-}
-
 bool Balloon::update(vector<Arrow*> arrows) {
-	pos_ = Point2D(pos_.x_ + dir_.getX(), pos_.y_ + dir_.getY());
+	ArrowsGameObject::update();
 
 	int i = 0;
 	// Comprueba si las esquinas frontales de la cabeza de la flecha estan dentro del rectangulo del globo

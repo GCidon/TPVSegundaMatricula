@@ -3,6 +3,7 @@
 #include "SDL.h" // Windows
 #include "SDL_image.h" // Windows
 #include "checkML.h"
+#include "ArrowsGameObject.h"
 #include "Texture.h"
 #include "Bow.h"
 #include "Balloon.h"
@@ -11,6 +12,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <list>
 
 using namespace std;
 
@@ -37,6 +39,8 @@ private:
 	vector<Arrow*> arrows_;
 	vector<Balloon*> balloons_;
 	ScoreBoard* score;
+
+	list<ArrowsGameObject*> gameObjects_;
 
 	SDL_Rect flechasRect;
 	SDL_Rect puntRect;

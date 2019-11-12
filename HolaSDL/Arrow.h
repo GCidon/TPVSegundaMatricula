@@ -1,29 +1,20 @@
 #pragma once
-#include "Vector2D.h"
-#include "Texture.h"
+#include "ArrowsGameObject.h"
 #include "checkML.h"
-class Arrow
+class Arrow : public ArrowsGameObject
 {
 private:
-	Point2D pos_;
-	Vector2D dir_;
-	Texture* texture_;
-	double w_;
-	double h_;
 	double angle_;
 
 public:
-	Arrow(Point2D pos, double w, double h, double angle, Vector2D dir, Texture* texture) : pos_(pos), dir_(dir), texture_(texture) {
-		w_ = w;
-		h_ = h;
+	Arrow(Point2D pos, double w, double h, double angle, Vector2D dir, Texture* texture) : ArrowsGameObject(pos, w, h, dir, texture, nullptr) {
 		angle_ = angle;
 	}
 
-	void render(SDL_Renderer* renderer);
-	SDL_Rect getRect();
+	virtual void render(SDL_Renderer* renderer);
 	SDL_Rect getHead();
 	void setDir(Vector2D newdir);
 	void setPos(Point2D newpos);
-	bool update();
+	virtual bool update();
 };
 

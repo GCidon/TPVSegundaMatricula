@@ -14,7 +14,9 @@ Game::Game() {
 	puntRect = SDL_Rect{ 100, 70, 100, 100 };
 
 	bow_ = new Bow(Point2D(10, WIN_HEIGHT / 2), 50, 80, Vector2D(0, 0), nullptr, texturas_[NLBow], texturas_[LBow], texturas_[Arrows], this);
+	gameObjects_.push_back(bow_);
 	score = new ScoreBoard(texturas_[Numbers], Point2D(WIN_WIDTH - 200, 20), 50, 50);
+	gameObjects_.push_back(score);
 
 	puntuacion = 0;
 }
@@ -27,10 +29,11 @@ void Game::render() {
 		flechasRect.x = 50 + 25 * i;
 		SDL_RenderCopyEx(renderer_, texturas_[Arrows]->getTexture(), NULL, &flechasRect, -90, NULL, SDL_FLIP_NONE);
 	}
-	bow_->render(renderer_);
-	score->render();
+
+	for each (auto object in gameObjects_) object->render(renderer_);
 	for each (auto arrow in arrows_) arrow->render(renderer_);
-	for each (auto balloon in balloons_) balloon->render();
+	for each (auto balloon in balloons_) balloon->render(renderer_);
+
 	SDL_RenderPresent(renderer_);
 }
 
@@ -65,7 +68,7 @@ void Game::run() {
 }
 
 void Game::update() {
-	bow_->update();
+	for each (auto object in gameObjects_) object->update();
 
 	auto arrow = arrows_.begin();
 	while (!arrows_.empty() && arrow != arrows_.end()) {

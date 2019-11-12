@@ -1,15 +1,13 @@
 #include "Bow.h"
-#include "Game.h"
 #include <iostream>
+#include "Game.h"
 
 Bow::Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* texture, Texture* textureL, Texture* arrowTex, Game* game) :
-	pos_(pos), w_(w), h_(h), dir_(dir) 
+	ArrowsGameObject(pos, w, h, dir, texture, game)
 {
 	loadedArrow_ = arrow;
-	texture_ = texture;
 	textureL_ = textureL;
 	arrowText_ = arrowTex;
-	game_ = game;
 	loaded = false;
 }
 
@@ -37,9 +35,10 @@ void Bow::setDir(Vector2D newdir) {
 	dir_ = newdir;
 }
 
-void Bow::update() {
-	if (pos_.y_ + dir_.getY()< WIN_HEIGHT-h_ && (pos_.y_ + dir_.getY() > 0))
-		pos_ = Point2D(pos_.x_ + dir_.getX(), pos_.y_ + dir_.getY());
+bool Bow::update() {
+	if (pos_.y_ + dir_.getY() < WIN_HEIGHT - h_ && (pos_.y_ + dir_.getY() > 0))
+		ArrowsGameObject::update();
+	return false;
 }
 
 bool Bow::handleEvents(SDL_Event const& evt, vector<Arrow*>& arrows) {

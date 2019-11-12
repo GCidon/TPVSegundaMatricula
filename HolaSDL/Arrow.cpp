@@ -28,7 +28,7 @@ void Arrow::setPos(Point2D newpos) {
 }
 
 bool Arrow::update() {
-	pos_ = Point2D(pos_.x_ + dir_.getX(), pos_.y_ + dir_.getY());
+	ArrowsGameObject::update();
 
 	if (pos_.x_ > WIN_WIDTH || pos_.x_ < 0 || pos_.y_ > WIN_HEIGHT || pos_.y_ < 0)
 		return true;
