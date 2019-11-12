@@ -82,6 +82,7 @@
     <ClInclude Include="ArrowsGameObject.h" />
     <ClInclude Include="Balloon.h" />
     <ClInclude Include="Bow.h" />
+    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ScoreBoard.h" />

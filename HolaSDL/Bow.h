@@ -1,12 +1,13 @@
 #pragma once
 #include "ArrowsGameObject.h"
+#include "EventHandler.h"
 #include "Arrow.h"
 #include "checkML.h"
 #include <vector>
 
 class Game;
 
-class Bow : public ArrowsGameObject
+class Bow : public ArrowsGameObject//, public EventHandler
 {
 private:
 	Arrow* loadedArrow_;
@@ -28,6 +29,7 @@ public:
 	virtual bool update();
 	void setDir(Vector2D newdir);
 	bool handleEvents(SDL_Event const& evt, vector<Arrow*>& arrows);
+	//virtual bool handleEvent(SDL_Event const& evt);
 
 	void load();
 	void shoot(vector<Arrow*>& arrows);

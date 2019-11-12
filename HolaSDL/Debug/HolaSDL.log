@@ -38,25 +38,6 @@ C:\Windows Kits\10\Include\10.0.18362.0\ucrt\crtdbg.h(303,1): warning C4005:  '_
   main.cpp
 C:\Windows Kits\10\Include\10.0.18362.0\ucrt\malloc.h(122): message :  see previous definition of '_malloca'
 C:\Windows Kits\10\Include\10.0.18362.0\ucrt\crtdbg.h(303,1): warning C4005:  '_malloca': macro redefinition
-  ScoreBoard.cpp
-C:\Windows Kits\10\Include\10.0.18362.0\ucrt\malloc.h(122): message :  see previous definition of '_malloca'
-C:\Windows Kits\10\Include\10.0.18362.0\ucrt\crtdbg.h(303,1): warning C4005:  '_malloca': macro redefinition
-C:\Windows Kits\10\Include\10.0.18362.0\ucrt\malloc.h(122): message :  see previous definition of '_malloca'
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(6,13): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(7,13): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(8,17): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(9,17): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(12,12): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(13,12): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(14,27): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(15,16): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(18,12): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(19,12): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(20,25): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-  Texture.cpp
-U:\hlocal\TPVSegundaMatricula\HolaSDL\ScoreBoard.cpp(21,16): warning C4244:  '=': conversion from 'double' to 'int', possible loss of data
-C:\Windows Kits\10\Include\10.0.18362.0\ucrt\crtdbg.h(303,1): warning C4005:  '_malloca': macro redefinition
-  Vector2D.cpp
   Generating Code...
 C:\Windows Kits\10\Include\10.0.18362.0\ucrt\malloc.h(122): message :  see previous definition of '_malloca'
 C:\Windows Kits\10\Include\10.0.18362.0\ucrt\malloc.h(122): message : U:\hlocal\TPVSegundaMatricula\HolaSDL\Balloon.cpp(42) : warning C4715: 'Balloon::update': not all control paths return a value

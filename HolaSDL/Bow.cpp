@@ -74,6 +74,7 @@ void Bow::load() {
 }
 
 // Dispara la flecha guardada y la a�ade al vector de flechas en pantalla
+// que dispare game
 void Bow::shoot(vector<Arrow*>& arrows) {
 	if (loaded) {
 		loadedArrow_->setPos(Point2D(pos_.x_, pos_.y_ + h_/2));

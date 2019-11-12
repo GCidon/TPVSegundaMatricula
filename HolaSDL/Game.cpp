@@ -68,7 +68,7 @@ void Game::run() {
 }
 
 void Game::update() {
-	for each (auto object in gameObjects_) object->update();
+	for (auto object : gameObjects_) object->update();
 
 	auto arrow = arrows_.begin();
 	while (!arrows_.empty() && arrow != arrows_.end()) {
@@ -110,6 +110,8 @@ Game::~Game() {
 	bow_ = nullptr;
 	delete score;
 	score = nullptr;
+
+	// hacer un for
 
 	auto arrow = arrows_.begin();
 	while (arrow != arrows_.end()) {

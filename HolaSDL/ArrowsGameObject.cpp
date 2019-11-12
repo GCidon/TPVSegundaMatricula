@@ -15,7 +15,7 @@ ArrowsGameObject::~ArrowsGameObject() {
 }
 
 void ArrowsGameObject::render(SDL_Renderer* renderer) {
-
+	//
 }
 
 bool ArrowsGameObject::update() {

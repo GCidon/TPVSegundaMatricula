@@ -65,10 +65,13 @@
     <ClInclude Include="ScoreBoard.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="ArrowsGameObject.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="ArrowsGameObject.h">
+    <ClInclude Include="EventHandler.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
