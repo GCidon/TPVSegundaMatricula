@@ -1,4 +1,0 @@
-Gonzalo Cidoncha Perez
-
-Entre las funcionalidades opcionales se encuentra el sistema de puntuaciones con
-Top 10 jugadores, y la posibilidad de girar el angulo de apuntado del arco.

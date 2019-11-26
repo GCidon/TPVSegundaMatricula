@@ -1,0 +1,8 @@
+﻿  Butterfly.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\crtdbg.h(303,1): warning C4005:  '_malloca': redefinición de macro
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\malloc.h(122): message :  vea la definición anterior de '_malloca'
+C:\Users\mxddx\Desktop\TPVSegundaMatricula\GonzaloCidoncha_Practica1\HolaSDL\Butterfly.cpp(6,15): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\mxddx\Desktop\TPVSegundaMatricula\GonzaloCidoncha_Practica1\HolaSDL\Butterfly.cpp(7,15): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\mxddx\Desktop\TPVSegundaMatricula\GonzaloCidoncha_Practica1\HolaSDL\Butterfly.cpp(8,19): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\mxddx\Desktop\TPVSegundaMatricula\GonzaloCidoncha_Practica1\HolaSDL\Butterfly.cpp(9,19): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+  HolaSDL.vcxproj -> C:\Users\mxddx\Desktop\TPVSegundaMatricula\GonzaloCidoncha_Practica1\bin\HolaSDLDebug.exe
