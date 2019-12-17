@@ -1,0 +1,6 @@
+Gonzalo Cidoncha Perez
+
+Esta práctica está formada sin tener la Práctica 2 terminada, por lo que las funcionalidades
+del juego en sí no están implementadas. Desde el juego se pueden pulsar las teclas
+P para pausar el juego y, ya que no se puede ni ganar ni perder al juego dado que no está 
+terminado, se puede pulsar la Q para entrar en el EndState.
