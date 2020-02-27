@@ -79,3 +79,7 @@ bool Bow::shoot() {
 	}
 	return aux;
 }
+
+bool Bow::isLoaded() {
+	return loaded;
+}

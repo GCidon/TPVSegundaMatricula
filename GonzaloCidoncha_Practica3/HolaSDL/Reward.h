@@ -2,14 +2,15 @@
 #include "ArrowsGameObject.h"
 #include "EventHandler.h"
 #include "checkML.h"
+
+class PlayState;
+
 class Reward :
 	public ArrowsGameObject, public EventHandler
 {
 protected:
 
-	Texture* bubbleText;
-
-	bool inBubble = true;
+	PlayState* playstate;
 	int type;
 
 	virtual void update();
@@ -17,6 +18,6 @@ protected:
 	virtual bool handleEvent(SDL_Event const& evt);
 
 public:
-	Reward(double x, double y, Texture* texture, Texture* bubble, Game* game);
+	Reward(double x, double y, Texture* texture, PlayState* ps, Game* game);
 };
 

@@ -48,6 +48,9 @@ void PlayState::handleEvents(SDL_Event evt) {
 		else if (evt.key.keysym.sym == SDLK_q) {
 			g_->getGSM()->pushState(new EndState(g_));
 		}
+		else if (evt.key.keysym.sym == SDLK_RIGHT) {
+			shoot();
+		}
 	}
 	for each (auto obj in eventHandlers_) obj->handleEvent(evt);
 }
@@ -59,7 +62,13 @@ void PlayState::update() {
 	bool deleted = false;
 	while (bal != balloons_.end() && !deleted) {
 		Balloon* aux = *bal;
-		for (auto arrow : arrows_) collisionA(arrow, aux);
+		for (auto arrow : arrows_) {
+			if (collisionA(arrow, aux)) {
+				score->addPunt(10);
+				Point2D newpos(aux->getPos().x_+aux->getW()/3, aux->getPos().y_);
+				reward(newpos);
+			}
+		}
 		if (aux->hit) {
 			balloons_.remove(aux);
 			eliminated_.push_back(aux);
@@ -74,7 +83,9 @@ void PlayState::update() {
 	deleted = false;
 	while (but != butterflies_.end() && !deleted) {
 		Butterfly* aux = *but;
-		for (auto arrow : arrows_) collisionA(arrow, aux);
+		for (auto arrow : arrows_) {
+			if (collisionA(arrow, aux) && score->getPunt() > 0) score->addPunt(-10);
+		}
 		if (aux->hit) {
 			butterflies_.remove(aux);
 			eliminated_.push_back(aux);
@@ -83,6 +94,30 @@ void PlayState::update() {
 		}
 		if (!butterflies_.empty() && !deleted)
 			but++;
+	}
+
+	auto rew = rewards_.begin();
+	deleted = false;
+	while (rew != rewards_.end() && !deleted) {
+		Reward* aux = *rew;
+		if (aux->hit) {
+			rewards_.remove(aux);
+			eventHandlers_.remove(aux);
+			eliminated_.push_back(aux);
+			rew = rewards_.begin();
+			deleted = true;
+		}
+		if (!rewards_.empty() && !deleted)
+			rew++;
+	}
+
+	auto obj = eliminated_.begin();
+	while (obj != eliminated_.end()) {
+		ArrowsGameObject* aux = *obj;
+		stage.remove(aux);
+		delete aux;
+		eliminated_.remove(aux);
+		obj = eliminated_.begin();
 	}
 
 	if (score->getPunt() >= 100 * level) {
@@ -118,6 +153,7 @@ void PlayState::nextLevel() {
 	while (arrow != arrows_.end()) {
 		Arrow* aux = *arrow;
 		arrows_.erase(arrow);
+		stage.remove(aux);
 		delete aux;
 		aux = nullptr;
 		arrow = arrows_.begin();
@@ -127,6 +163,7 @@ void PlayState::nextLevel() {
 	while (!balloons_.empty() && balloon != balloons_.end()) {
 		ArrowsGameObject* aux = *balloon;
 		balloons_.erase(balloon);
+		stage.remove(aux);
 		delete aux;
 		aux = nullptr;
 		balloon = balloons_.begin();
@@ -136,6 +173,7 @@ void PlayState::nextLevel() {
 	while (!butterflies_.empty() && but != butterflies_.end()) {
 		Butterfly* aux = *but;
 		butterflies_.erase(but);
+		stage.remove(aux);
 		delete aux;
 		aux = nullptr;
 		but = butterflies_.begin();
@@ -151,19 +189,24 @@ void PlayState::nextLevel() {
 }
 
 void PlayState::shoot() {
-	Arrow* newArrow = new Arrow(Point2D(bow_->getPos().x_, bow_->getPos().y_ + 30), 75, 20, bow_->getAngle(), Vector2D(speed * 3, bow_->getAngle()).normalize() * speed, g_->texturas_[Arrows]);
-	stage.push_back(newArrow);
-	arrows_.push_back(newArrow);
-	newArrow->setItList(stage.end());
-	if (arrowsLeft > 0)
-		arrowsLeft--;
+	if (bow_->isLoaded()) {
+		Arrow* newArrow = new Arrow(Point2D(bow_->getPos().x_, bow_->getPos().y_ + 30), 75, 20, bow_->getAngle(), Vector2D(speed * 3, bow_->getAngle()).normalize() * speed, g_->texturas_[Arrows]);
+		stage.push_back(newArrow);
+		arrows_.push_back(newArrow);
+		newArrow->setItList(stage.end());
+		if (arrowsLeft > 0)
+			arrowsLeft--;
+	}
 }
 
-void PlayState::collisionA(Arrow* hitter, ArrowsGameObject* hitted) {
+bool PlayState::collisionA(Arrow* hitter, ArrowsGameObject* hitted) {
 	SDL_Rect head = hitter->getHead();
 	if (head.x + head.w > hitted->getPos().x_ && head.x + head.w < hitted->getPos().x_ + hitted->getW() && head.y > hitted->getPos().y_ && head.y < hitted->getPos().y_ + hitted->getH() ||
-		head.x + head.w > hitted->getPos().x_ && head.x + head.w < hitted->getPos().x_ + hitted->getW() && head.y + head.h > hitted->getPos().y_ && head.y + head.h < hitted->getPos().y_ + hitted->getH())
+		head.x + head.w > hitted->getPos().x_ && head.x + head.w < hitted->getPos().x_ + hitted->getW() && head.y + head.h > hitted->getPos().y_ && head.y + head.h < hitted->getPos().y_ + hitted->getH()) {
 		hitted->hit = true;
+		return true;
+	}
+	return false;
 }
 
 void PlayState::killObject(list<GameObject*>::iterator it) {
@@ -233,4 +276,18 @@ PlayState::~PlayState() {
 		aux = nullptr;
 		but = butterflies_.begin();
 	}
+}
+
+void PlayState::reward(Point2D pos) {
+	if (rand()%3+1 == 2) {
+		Reward* newreward = new Reward(pos.x_, pos.y_, g_->texturas_[Rewards], this, g_);
+		stage.push_back(newreward);
+		eventHandlers_.push_back(newreward);
+		rewards_.push_back(newreward);
+	}
+}
+
+void PlayState::extraArrow() {
+	if(arrowsLeft<10)
+		arrowsLeft += 1;
 }

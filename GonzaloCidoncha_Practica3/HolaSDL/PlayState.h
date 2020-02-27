@@ -16,10 +16,12 @@ private:
 	int arrowsLeft = 10;
 	int level;
 
-	void collisionA(Arrow* hitter, ArrowsGameObject* hitted);
+	bool collisionA(Arrow* hitter, ArrowsGameObject* hitted);
 	void generate();
 	void nextLevel();
 	void killObject(list<GameObject*>::iterator it);
+
+	void reward(Point2D pos);
 
 	void saveGame(string file);
 	void loadGame(string file);
@@ -42,6 +44,7 @@ public:
 	virtual void handleEvents(SDL_Event evt);
 
 	void shoot();
+	void extraArrow();
 
 
 };

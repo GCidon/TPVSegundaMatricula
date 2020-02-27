@@ -37,6 +37,7 @@ public:
 
 	void load();
 	bool shoot();
+	bool isLoaded();
 
 	double getAngle() { return angle; }
 };
