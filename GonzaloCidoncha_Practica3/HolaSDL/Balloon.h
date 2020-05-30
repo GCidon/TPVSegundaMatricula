@@ -1,12 +1,8 @@
 #pragma once
-#include "Texture.h"
-#include "Vector2D.h"
-#include "Arrow.h"
 #include "ArrowsGameObject.h"
 #include "checkML.h"
-#include <vector>
 
-class Game;
+class PlayState;
 
 class Balloon : public ArrowsGameObject
 {
@@ -16,11 +12,14 @@ private:
 	int deadCount = 0;
 
 public:
-	Balloon(Point2D pos, double w, double h, Vector2D dir, Texture* texture, Game* game);
-	~Balloon();
+	Balloon(Point2D pos, Vector2D dir, int w, int h, double speed, Texture* texture, GameState* state);
+	virtual ~Balloon();
 
 	virtual void render();
 	virtual void update();
-	bool isHit() { return hit; }
+	bool isHit() { return estado; }
+
+	virtual void loadFromFile(std::ifstream& file);
+	virtual void saveToFile(std::ofstream& file);
 };
 

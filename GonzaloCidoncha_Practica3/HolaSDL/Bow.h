@@ -16,16 +16,14 @@ private:
 	Texture* textureL_;
 	Texture* arrowText_;
 	bool loaded;
-	double angle = 0;
 
 public:
-	Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* texture, Texture* textureL, Texture* arrowTex, Game* game);
+	Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* texture, Texture* textureL, Texture* arrowTex, GameState* state);
 
 	~Bow() {
 		texture_ = nullptr;
 		textureL_ = nullptr;
 		arrowText_ = nullptr;
-		game_ = nullptr;
 		delete loadedArrow_;
 		loadedArrow_ = nullptr;
 	}
@@ -39,6 +37,6 @@ public:
 	bool shoot();
 	bool isLoaded();
 
-	double getAngle() { return angle; }
+	double getAngle() { return angulo_; }
 };
 

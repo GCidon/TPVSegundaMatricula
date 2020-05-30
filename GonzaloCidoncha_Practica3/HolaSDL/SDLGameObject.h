@@ -6,10 +6,12 @@
 #include "Vector2D.h"
 #include "Texture.h"
 
+class GameState;
+
 class SDLGameObject : public GameObject
 {
 public:
-	SDLGameObject(Point2D pos, int w, int h, Texture* texture);
+	SDLGameObject(Point2D pos, int w, int h, Texture* texture, GameState* state);
 	~SDLGameObject() {}
 
 	virtual void render();
@@ -21,6 +23,7 @@ protected:
 	int h_;
 	Texture* texture_;
 	Point2D pos_;
+	GameState* state_;
 
 };
 

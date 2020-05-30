@@ -1,9 +1,10 @@
 #include "SDLGameObject.h"
 
-SDLGameObject::SDLGameObject(Point2D pos, int w, int h, Texture* texture) : GameObject(), pos_(pos){
+SDLGameObject::SDLGameObject(Point2D pos, int w, int h, Texture* texture, GameState* state) : GameObject(), pos_(pos){
 	w_ = w;
 	h_ = h;
 	texture_ = texture;
+	state_ = state;
 }
 
 void SDLGameObject::render() {

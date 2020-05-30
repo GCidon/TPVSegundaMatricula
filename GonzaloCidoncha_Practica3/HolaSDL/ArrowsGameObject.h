@@ -1,38 +1,32 @@
 #pragma once
-#include "GameObject.h"
-#include "Vector2D.h"
-#include "Texture.h"
-#include "List.h"
+#include "checkML.h"
+
+#include "SDLGameObject.h"
+#include <fstream>
 #include <list>
 
-class Game;
+class GameState;
 
 class ArrowsGameObject :
-	public GameObject
+	public SDLGameObject
 {
-protected:
-	Point2D pos_;
-	double w_, h_;
-	Vector2D dir_;
-	Texture* texture_;
-	Game* game_;
-
-	SDL_Rect getRect();
-	SDL_Rect getDestRect();
-	SDL_Rect getCollisionRect();
 
 public:
-	ArrowsGameObject(double x, double y, double w, double h, Vector2D dir, Texture* texture, Game* game);
+	ArrowsGameObject(double posx, double posy, double dirx, double diry, int w, int h,  double speed, int angle, Texture* texture, GameState* state);
 
 	void setItList(list<GameObject*>::iterator it);
 	list<GameObject*>::iterator it_;
-	bool hit = false;
-	Point2D getPos() { return pos_; }
-	double getW() { return w_; }
-	double getH() { return h_; }
+
 	virtual void render();
 	virtual void update();
-	void loadFromFile();
-	void saveToFile();
+	SDL_Rect getRect() const;
+	virtual void loadFromFile(std::ifstream& file);
+	virtual void saveToFile(std::ofstream& file);
+
+protected:
+	Vector2D dir_;
+	int angulo_;
+	double speed_;
+
 };
 

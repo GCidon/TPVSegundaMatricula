@@ -3,21 +3,27 @@
 #include "EventHandler.h"
 #include "checkML.h"
 
-class PlayState;
+class GameState;
 
 class Reward :
 	public ArrowsGameObject, public EventHandler
 {
 protected:
 
-	PlayState* playstate;
-	int type;
+	int type_;
+
+	bool burbuja_;
+
+	Texture* burbujaText;
 
 	virtual void update();
 	virtual void render();
 	virtual bool handleEvent(SDL_Event const& evt);
 
 public:
-	Reward(double x, double y, Texture* texture, PlayState* ps, Game* game);
+	Reward(double x, double y, Texture* texture, Texture* burbuja, GameState* state);
+
+	virtual void loadFromFile(ifstream& file);
+	virtual void saveToFile(ofstream& file);
 };
 

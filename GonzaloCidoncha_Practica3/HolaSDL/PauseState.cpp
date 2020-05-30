@@ -2,11 +2,11 @@
 
 PauseState::PauseState(Game* g) : GameState(g) {
 	resumeGame = new MenuButton(Point2D(300, 150), 200, 100, g_->texturas_[ResumeB], g_, resume);
-	stage.push_back(resumeGame);
+	stage_.push_back(resumeGame);
 	eventHandlers_.push_back(resumeGame);
 
 	menuB = new MenuButton(Point2D(300, 300), 200, 100, g_->texturas_[MenuB], g_, menu);
-	stage.push_back(menuB); 
+	stage_.push_back(menuB); 
 	eventHandlers_.push_back(menuB);
 }
 

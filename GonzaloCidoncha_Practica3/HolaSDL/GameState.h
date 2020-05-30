@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Game.h"
+#include "SDLGameObject.h"
 #include <list>
 
 using namespace std;
@@ -8,13 +9,16 @@ using namespace std;
 class GameState
 {
 protected:
-	list<GameObject*> stage;
+	list<GameObject*> stage_;
 	list<EventHandler*> eventHandlers_;
 	Game* g_;
 
+	void addGameObject(SDLGameObject* obj);
+	void addEventHandler(EventHandler* obj);
+
 public:
 	GameState(Game* g);
-	~GameState();
+	virtual ~GameState();
 
 	virtual void update();
 	virtual void render();

@@ -9,16 +9,15 @@ private:
 	double angle_;
 
 public:
-	Arrow(Point2D pos, double w, double h, double angle, Vector2D dir, Texture* texture) : 
-		ArrowsGameObject(pos.x_, pos.y_, w, h, dir, texture, nullptr)
+	Arrow(Point2D pos, double w, double h, double angle, Vector2D dir, Texture* texture, GameState* state) : 
+		ArrowsGameObject(pos.x_, pos.y_, dir.getX(), dir.getY(), w, h, 10, 0, texture, state)
 	{
 		angle_ = angle;
 	}
 
-	virtual void render(SDL_Renderer* renderer);
-	SDL_Rect getHead();
-	void setDir(Vector2D newdir);
-	void setPos(Point2D newpos);
+	virtual ~Arrow() {}
+
 	virtual void update();
+	SDL_Rect getHead();
 };
 

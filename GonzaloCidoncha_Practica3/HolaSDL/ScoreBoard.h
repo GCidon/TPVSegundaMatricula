@@ -10,7 +10,7 @@ private:
 	int punt = 0;
 
 public:
-	ScoreBoard(Texture* texture, Point2D pos, int w, int h) : ArrowsGameObject(pos.x_, pos.y_, w, h, Vector2D(0,0), texture, nullptr) {}
+	ScoreBoard(Texture* texture, Point2D pos, int w, int h) : ArrowsGameObject(pos.x_, pos.y_, 0, 0, w, h, 0, 0, texture, nullptr) {}
 
 	virtual void render();
 	void addPunt(int newPunt) { punt += newPunt; }

@@ -24,3 +24,15 @@ double Vector2D::operator*(Vector2D const& vector) {
 Vector2D Vector2D::operator*(int num) {
 	return Vector2D(x_ * num, y_ * num);
 }
+
+std::ostream& operator<<(std::ostream& out, Vector2D& v)
+{
+	out << v.x_ << " " << v.y_;
+	return out;
+}
+
+std::istream& operator>>(std::istream& in, Vector2D& v)
+{
+	in >> v.x_ >> v.y_;
+	return in;
+}

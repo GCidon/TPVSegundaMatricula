@@ -1,9 +1,10 @@
 #include "Bow.h"
-#include "Game.h"
+#include "GameState.h"
+#include "PlayState.h"
 #include <iostream>
 
-Bow::Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* texture, Texture* textureL, Texture* arrowTex, Game* game) :
-	ArrowsGameObject(pos.x_, pos.y_, w, h, dir, texture, game)
+Bow::Bow(Point2D pos, double w, double h, Vector2D dir, Arrow* arrow, Texture* texture, Texture* textureL, Texture* arrowTex, GameState* state) :
+	ArrowsGameObject(pos.x_, pos.y_, dir.getX(), dir.getY(), w, h, 10, 0, texture, state)
 {
 	loadedArrow_ = arrow;
 	textureL_ = textureL;
@@ -21,11 +22,11 @@ void Bow::render() {
 
 	if (loaded) {
 		destRect.w = w_+20;
-		SDL_RenderCopyEx(game_->getRenderer(), textureL_->getTexture(), NULL, &destRect, angle, NULL, SDL_FLIP_NONE);
+		textureL_->renderFrame(destRect, 0, 0, angulo_);
 	}
 	else {
 		destRect.w = w_;
-		SDL_RenderCopyEx(game_->getRenderer(), texture_->getTexture(), NULL, &destRect, angle, NULL, SDL_FLIP_NONE);
+		texture_->renderFrame(destRect, 0, 0, angulo_);
 	}
 }
 
@@ -50,9 +51,9 @@ bool Bow::handleEvent(SDL_Event const& evt) {
 		} else if (evt.key.keysym.sym == SDLK_LEFT) {
 			load();
 		} else if (evt.key.keysym.sym == SDLK_w) {
-			angle -= 5;
+			angulo_ -= 5;
 		} else if (evt.key.keysym.sym == SDLK_s) {
-			angle += 5;
+			angulo_ += 5;
 		}
 	}
 	if (evt.type == SDL_KEYUP) {
@@ -65,14 +66,15 @@ bool Bow::handleEvent(SDL_Event const& evt) {
 void Bow::load() {
 	if (!loaded && loadedArrow_ == nullptr) {
 		loaded = true;
-		loadedArrow_ = new Arrow(pos_, 75, 20, angle, Vector2D(0, 0), arrowText_);
 	}
 }
 
 bool Bow::shoot() {
 	bool aux = false;
 	if (loaded) {
-		//game_->shoot();
+		Point2D shootpos = Point2D(pos_.x_, pos_.y_ + (h_ / 2));
+		loadedArrow_ = new Arrow(shootpos, 75, 20, angulo_, Vector2D(1, 0), arrowText_, state_);
+		static_cast<PlayState*>(state_)->shoot(loadedArrow_);
 		loaded = false;
 		loadedArrow_ = nullptr;
 		aux = true;

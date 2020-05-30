@@ -1,6 +1,6 @@
 #include "MenuButton.h"
 
-MenuButton::MenuButton(Point2D pos, int w, int h, Texture* texture, Game* g, CallBackOnClick* callback) : SDLGameObject(pos, w, h, texture) {
+MenuButton::MenuButton(Point2D pos, int w, int h, Texture* texture, Game* g, CallBackOnClick* callback) : SDLGameObject(pos, w, h, texture, nullptr) {
 	g_ = g;
 	cb_ = callback;
 }

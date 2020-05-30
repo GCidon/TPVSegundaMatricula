@@ -3,11 +3,11 @@
 
 EndState::EndState(Game* g) : GameState(g) {
 	menuB = new MenuButton(Point2D(10, 500), 150, 75, g_->texturas_[MenuB], g_, menu);
-	stage.push_back(menuB);
+	stage_.push_back(menuB);
 	eventHandlers_.push_back(menuB);
 
 	exitGame = new MenuButton(Point2D(600, 500), 150, 75, g_->texturas_[ExitB], g_, exit);
-	stage.push_back(exitGame);
+	stage_.push_back(exitGame);
 	eventHandlers_.push_back(exitGame);
 }
 
