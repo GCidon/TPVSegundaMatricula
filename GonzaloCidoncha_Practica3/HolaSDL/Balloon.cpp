@@ -17,7 +17,9 @@ void Balloon::render() {
 void Balloon::update() {
 	if (estado) {
 		ArrowsGameObject::update();
-		if (pos_.x_ > WIN_WIDTH || pos_.x_ < 0 || pos_.y_ > WIN_HEIGHT || pos_.y_ + h_ / 2 < 0)
+		if (static_cast<PlayState*>(state_)->collisionBalloon(this))
+			estado = false;
+		else if (pos_.x_ > WIN_WIDTH || pos_.x_ < 0 || pos_.y_ > WIN_HEIGHT || pos_.y_ + h_ / 2 < 0)
 			estado = false;
 	}
 	else static_cast<PlayState*>(state_)->killBalloon(it_);

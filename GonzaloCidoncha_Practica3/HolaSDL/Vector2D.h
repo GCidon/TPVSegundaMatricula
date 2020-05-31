@@ -32,6 +32,8 @@ public:
 
 	double getX() const { return x_; }
 	double getY() const { return y_; }
+	void setX(double newx) { x_ = newx; }
+	void setY(double newy) { y_ = newy; }
 
 	double getModulo() const;
 };

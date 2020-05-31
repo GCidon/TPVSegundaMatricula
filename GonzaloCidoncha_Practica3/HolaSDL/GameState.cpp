@@ -5,7 +5,8 @@ GameState::GameState(Game* g) {
 }
 
 GameState::~GameState() {
-	for (auto obj : stage_) {
+	for (GameObject* obj : stage_)
+	{
 		delete obj;
 		obj = nullptr;
 	}
@@ -22,7 +23,8 @@ void GameState::render() {
 }
 
 void GameState::handleEvents(SDL_Event evt) {
-	for (auto obj : eventHandlers_) obj->handleEvent(evt);
+	for (auto obj : eventHandlers_) 
+		obj->handleEvent(evt);
 }
 
 void GameState::addGameObject(SDLGameObject* obj)

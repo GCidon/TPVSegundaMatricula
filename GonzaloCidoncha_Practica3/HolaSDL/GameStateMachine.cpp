@@ -3,8 +3,7 @@
 GameStateMachine::~GameStateMachine() {
 	while (!gameStates_.empty())
 	{
-		delete gameStates_.top();
-		gameStates_.pop();
+		popState();
 	}
 }
 
@@ -17,8 +16,11 @@ void GameStateMachine::pushState(GameState* gs) {
 }
 
 void GameStateMachine::popState() {
-	delete gameStates_.top();
-	gameStates_.pop();
+	if (!gameStates_.empty()) {
+		delete gameStates_.top();
+		gameStates_.top() = nullptr;
+		gameStates_.pop();
+	}
 }
 
 void GameStateMachine::changeState(GameState* gs) {

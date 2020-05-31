@@ -5,6 +5,7 @@
 #include "SDL_image.h"
 #include "Vector2D.h"
 #include "Texture.h"
+#include "checkML.h"
 
 class GameState;
 
@@ -12,7 +13,7 @@ class SDLGameObject : public GameObject
 {
 public:
 	SDLGameObject(Point2D pos, int w, int h, Texture* texture, GameState* state);
-	~SDLGameObject() {}
+	~SDLGameObject();
 
 	virtual void render();
 	virtual void update() {}

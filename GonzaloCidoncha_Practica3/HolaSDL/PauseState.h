@@ -1,6 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include "MenuButton.h"
+#include "checkML.h"
 class PauseState :
 	public GameState
 {
@@ -14,6 +15,7 @@ public:
 private:
 	MenuButton* resumeGame;
 	MenuButton* menuB;
+	MenuButton* saveGame;
 
 };
 

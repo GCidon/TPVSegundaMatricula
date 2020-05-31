@@ -30,23 +30,20 @@ private:
 
 	void eliminar();
 
-	void saveGame(string file);
-	void loadGame(string file);
-	void savePunt(string file);
 
 public:
 	PlayState(Game* g);
 	virtual ~PlayState();
 
-	list<Arrow*> arrows_;
-	list<Balloon*> balloons_;
-	list<Butterfly*> butterflies_;
-	list<Reward*> rewards_;
-	list<list<GameObject*>::iterator> eliminados_;
+	std::list<Arrow*> arrows_;
+	std::list<Balloon*> balloons_;
+	std::list<Butterfly*> butterflies_;
+	std::list<Reward*> rewards_;
+	std::list<std::list<GameObject*>::iterator> eliminados_;
 
 	virtual void render();
 	virtual void update();
-	virtual void handleEvents(SDL_Event& evt);
+	virtual void handleEvents(SDL_Event evt);
 
 	void extraArrow();
 	void nextLevel();
@@ -55,10 +52,13 @@ public:
 	bool collisionBalloon(Balloon* b);
 	bool collisionButterfly(Butterfly* b);
 	bool collisionReward(Reward* r);
-	void killBalloon(list<GameObject*>::iterator it);
-	void killButterfly(list<GameObject*>::iterator it);
-	void killReward(list<GameObject*>::iterator it);
-	void killArrow(list<GameObject*>::iterator it);
+	void killBalloon(std::list<GameObject*>::iterator it);
+	void killButterfly(std::list<GameObject*>::iterator it);
+	void killReward(std::list<GameObject*>::iterator it, list<EventHandler*>::iterator evtit);
+	void killArrow(std::list<GameObject*>::iterator it);
 
+	void saveGame(string file);
+	void loadGame(string file);
+	void savePunt(string file);
 };
 

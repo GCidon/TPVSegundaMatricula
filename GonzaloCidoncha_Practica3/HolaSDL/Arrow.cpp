@@ -4,9 +4,9 @@
 
 SDL_Rect Arrow::getHead() {
 	SDL_Rect ret;
-	ret.x = pos_.x_ + (w_ / 2);
+	ret.x = pos_.x_ + (w_*2 / 3);
 	ret.y = pos_.y_;
-	ret.w = w_ / 2;
+	ret.w = w_ / 3;
 	ret.h = h_;
 	return ret;
 }

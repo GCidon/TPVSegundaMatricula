@@ -1,7 +1,7 @@
 #pragma once
-#include "checkML.h"
 
 #include "SDLGameObject.h"
+#include "checkML.h"
 #include <fstream>
 #include <list>
 
@@ -13,9 +13,10 @@ class ArrowsGameObject :
 
 public:
 	ArrowsGameObject(double posx, double posy, double dirx, double diry, int w, int h,  double speed, int angle, Texture* texture, GameState* state);
+	virtual ~ArrowsGameObject() {}
 
-	void setItList(list<GameObject*>::iterator it);
-	list<GameObject*>::iterator it_;
+	void setItList(const std::list<GameObject*>::iterator& it);
+	std::list<GameObject*>::iterator it_;
 
 	virtual void render();
 	virtual void update();

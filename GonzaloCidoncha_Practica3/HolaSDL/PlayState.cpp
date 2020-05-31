@@ -15,7 +15,7 @@ PlayState::PlayState(Game* g) : GameState(g) {
 	stage_.push_back(score_);
 
 	for (int i = 0; i < 5 + level_; i++) {
-		Butterfly* newBut = new Butterfly(rand() % WIN_WIDTH - 0, rand() % WIN_HEIGHT - 0, 80, 80, Vector2D(0, 0), g_->texturas_[Butterflies], this);
+		Butterfly* newBut = new Butterfly(rand() % WIN_WIDTH - 0, rand() % WIN_HEIGHT - 0, 80, 80, Vector2D(rand()%2+1, rand()%2+1), g_->texturas_[Butterflies], this);
 		butterflies_.push_back(newBut);
 		addGameObject(newBut);
 	}
@@ -24,8 +24,7 @@ PlayState::PlayState(Game* g) : GameState(g) {
 
 void PlayState::render() {
 	SDL_RenderClear(g_->renderer_);
-	g_->backgrounds_[level_ - 1]->render({ 0,0,WIN_WIDTH,WIN_HEIGHT });
-	// Dibujo del numero de flechas disponibles
+	g_->backgrounds_[level_%4]->render({ 0,0,WIN_WIDTH,WIN_HEIGHT });
 	for (int i = 0; i < arrowsLeft; i++) {
 		flechasRect.x = 50 + 25 * i;
 		SDL_RenderCopyEx(g_->renderer_, g_->texturas_[Arrows]->getTexture(), NULL, &flechasRect, -90, NULL, SDL_FLIP_NONE);
@@ -34,7 +33,7 @@ void PlayState::render() {
 	SDL_RenderPresent(g_->renderer_);
 }
 
-void PlayState::handleEvents(SDL_Event& evt) {
+void PlayState::handleEvents(SDL_Event evt) {
 	if (evt.type == SDL_KEYDOWN) {
 		if (evt.key.keysym.sym == SDLK_p) {
 			g_->getGSM()->pushState(new PauseState(g_));
@@ -47,9 +46,12 @@ void PlayState::update() {
 	GameState::update();
 
 	if (score_->getPunt() >= 100 * level_) {
-		if (level_ == 4) g_->getGSM()->pushState(new EndState(g_));
-		else nextLevel();
+		nextLevel();
 	}
+
+	if (level_ == 4)
+		g_->getGSM()->pushState(new EndState(g_));
+
 
 	eliminar();
 	generate();
@@ -57,7 +59,7 @@ void PlayState::update() {
 
 void PlayState::generate() {
 	if (rand() % 100 - 1 <= 3) {
-		Balloon* balloon = new Balloon(Point2D(rand() % WIN_WIDTH - 50, WIN_HEIGHT - 10), Vector2D(0, -1), 100, 100, 0, g_->texturas_[Ballons], this);
+		Balloon* balloon = new Balloon(Point2D(rand() % WIN_WIDTH - 20, WIN_HEIGHT - 10), Vector2D(0, -1), 100, 100, 0, g_->texturas_[Ballons], this);
 		balloons_.push_back(balloon);
 		addGameObject(balloon);
 	}
@@ -79,13 +81,14 @@ bool PlayState::collisionBalloon(Balloon* b) {
 	bool aux = false;
 	auto it = arrows_.begin();
 	while (it != arrows_.end() && !aux) {
-		aux = SDL_HasIntersection(&((*it)->getRect()), &b->getRect());
+		aux = SDL_HasIntersection(&((*it)->getHead()), &b->getRect());
 		if (aux) {
 			score_->addPunt(10);
 			if (rand() % 5 - 1 == 2) {
-				Reward* newrew = new Reward(b->getRect().x, b->getRect().y, g_->texturas_[Rewards], g_->texturas_[Bubble], this);
+				Reward* newrew = new Reward(b->getRect().x, b->getRect().y+30, g_->texturas_[Rewards], g_->texturas_[Bubble], this);
 				rewards_.push_back(newrew);
 				addGameObject(newrew);
+				addEventHandler(newrew);
 			}
 		}
 		else it++;
@@ -97,7 +100,7 @@ bool PlayState::collisionButterfly(Butterfly* b) {
 	bool aux = false;
 	auto it = arrows_.begin();
 	while (it != arrows_.end() && !aux) {
-		aux = SDL_HasIntersection(&((*it)->getRect()), &b->getRect());
+		aux = SDL_HasIntersection(&((*it)->getHead()), &b->getRect());
 		if (aux) {
 			score_->addPunt(-10);
 		}
@@ -110,7 +113,7 @@ bool PlayState::collisionReward(Reward* b) {
 	bool aux = false;
 	auto it = arrows_.begin();
 	while (it != arrows_.end() && !aux) {
-		aux = SDL_HasIntersection(&((*it)->getRect()), &b->getRect());
+		aux = SDL_HasIntersection(&((*it)->getHead()), &b->getRect());
 		it++;
 	}
 	return aux;
@@ -126,8 +129,9 @@ void PlayState::killButterfly(list<GameObject*>::iterator it) {
 	eliminados_.push_back(it);
 }
 
-void PlayState::killReward(list<GameObject*>::iterator it) {
+void PlayState::killReward(list<GameObject*>::iterator it, list<EventHandler*>::iterator evtit) {
 	rewards_.remove(static_cast<Reward*>((*it)));
+	eventHandlers_.remove((*evtit));
 	eliminados_.push_back(it);
 }
 
@@ -171,15 +175,8 @@ PlayState::~PlayState() {
 	delete score_;
 	score_ = nullptr;
 
-	for (auto obj : stage_) {
-		delete obj;
-		obj = nullptr;
-	}
-
-	stage_.clear();
 	arrows_.clear();
 	balloons_.clear();
-	eventHandlers_.clear();
 	butterflies_.clear();
 	rewards_.clear();
 	eliminados_.clear();
@@ -199,6 +196,7 @@ void PlayState::eliminar() {
 		stage_.erase(*it);
 		it++;
 	}
+	eliminados_.clear();
 }
 
 void PlayState::shoot(Arrow* arrow) {
@@ -250,5 +248,50 @@ void PlayState::loadGame(string file) {
 	ifstream f;
 	f.open(file);
 
+	f >> level_;
 
+	int punt;
+	f >> punt;
+	score_->setPunt(punt);
+
+	bow_->loadFromFile(f);
+	f >> arrowsLeft;
+
+	int flechas;
+	f >> flechas;
+	for (int i = 0; i < flechas; i++) {
+		Arrow* newarrow = new Arrow(Point2D(0, 0), 0, 0, 0, Vector2D(0, 0), g_->texturas_[Arrows], this);
+		newarrow->loadFromFile(f);
+		arrows_.push_back(newarrow);
+		addGameObject(newarrow);
+	}
+
+	int globos;
+	f >> globos;
+	for (int i = 0; i < globos; i++) {
+		Balloon* newbal = new Balloon(Point2D(0, 0), Vector2D(0, 0), 100, 100, 0, g_->texturas_[Ballons], this);
+		newbal->loadFromFile(f);
+		balloons_.push_back(newbal);
+		addGameObject(newbal);
+	}
+
+	int butterflies;
+	f >> butterflies;
+	for (int i = 0; i < butterflies; i++) {
+		Butterfly* newbut = new Butterfly(0, 0, 80, 80, Vector2D(0, 0), g_->texturas_[Butterflies], this);
+		newbut->loadFromFile(f);
+		butterflies_.push_back(newbut);
+		addGameObject(newbut);
+	}
+
+	int rewards;
+	f >> rewards;
+	for (int i = 0; i < rewards; i++) {
+		Reward* newrew = new Reward(0, 0, g_->texturas_[Rewards], g_->texturas_[Bubble], this);
+		newrew->loadFromFile(f);
+		rewards_.push_back(newrew);
+		addGameObject(newrew);
+	}
+
+	f.close();
 }

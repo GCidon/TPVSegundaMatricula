@@ -18,7 +18,7 @@ void ArrowsGameObject::render() {
 	texture_->renderFrame(getRect(), 0, 0, angulo_);
 }
 
-void ArrowsGameObject::setItList(list<GameObject*>::iterator it) {
+void ArrowsGameObject::setItList(const list<GameObject*>::iterator& it) {
 	it_ = it;
 }
 

@@ -7,6 +7,8 @@ SDLGameObject::SDLGameObject(Point2D pos, int w, int h, Texture* texture, GameSt
 	state_ = state;
 }
 
+SDLGameObject::~SDLGameObject() {}
+
 void SDLGameObject::render() {
 	texture_->render(getRect());
 }

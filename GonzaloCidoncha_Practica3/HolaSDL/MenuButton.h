@@ -1,6 +1,7 @@
 #pragma once
 #include "SDLGameObject.h"
 #include "EventHandler.h"
+#include "checkML.h"
 
 class Game;
 class PlayState;
@@ -16,7 +17,10 @@ protected:
 	
 public:
 	MenuButton(Point2D pos, int w, int h, Texture* texture, Game* g, CallBackOnClick* callback);
-	~MenuButton() {}
+	virtual ~MenuButton() {
+		cb_ = nullptr;
+		g_ = nullptr;
+	}
 	virtual bool handleEvent(SDL_Event const& evt);
 };
 

@@ -13,6 +13,7 @@ protected:
 	int type_;
 
 	bool burbuja_;
+	bool dead;
 
 	Texture* burbujaText;
 

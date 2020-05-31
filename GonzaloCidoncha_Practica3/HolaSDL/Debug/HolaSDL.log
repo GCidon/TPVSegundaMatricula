@@ -1,8 +1,11 @@
-﻿  PlayState.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\crtdbg.h(303,1): warning C4005: '_malloca': redefinición de macro
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\malloc.h(122): message : vea la definición anterior de '_malloca'
-C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\HolaSDL\Arrow.h(13,63): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
-C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\HolaSDL\Arrow.h(13,60): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+﻿  GameStateMachine.cpp
+C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\HolaSDL\GameStateMachine.cpp(20,27): warning C4150: eliminación de puntero a tipo 'GameState' incompleto; no se ha llamado a un destructor
+C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\HolaSDL\GameStateMachine.h(6): message : vea la declaración de 'GameState'
+  MainMenuState.cpp
+C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\HolaSDL\Arrow.h(12,63): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\HolaSDL\Arrow.h(12,60): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\HolaSDL\Arrow.h(14,13): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
 C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\HolaSDL\Butterfly.h(13,154): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
 C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\HolaSDL\Butterfly.h(13,151): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+  Generando código...
   HolaSDL.vcxproj -> C:\TPVSegundaMatricula\GonzaloCidoncha_Practica3\bin\HolaSDLDebug.exe

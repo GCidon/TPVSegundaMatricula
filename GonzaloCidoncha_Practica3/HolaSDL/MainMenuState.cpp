@@ -4,13 +4,19 @@
 
 MainMenuState::MainMenuState(Game* g) : GameState(g) {
 	newGame = new MenuButton(Point2D(300, 150), 200, 100, g_->texturas_[PlayB], g_, play);
-	stage_.push_back(newGame);
-	eventHandlers_.push_back(newGame);
+	addGameObject(newGame);
+	addEventHandler(newGame);
 
-	exitGame = new MenuButton(Point2D(300, 300), 200, 100, g_->texturas_[ExitB], g_, exit);
-	stage_.push_back(exitGame);
-	eventHandlers_.push_back(exitGame);
+	loadGame = new MenuButton(Point2D(300, 300), 200, 100, g_->texturas_[LoadB], g_, load);
+	addGameObject(loadGame);
+	addEventHandler(loadGame);
+
+	exitGame = new MenuButton(Point2D(300, 450), 200, 100, g_->texturas_[ExitB], g_, exit);
+	addGameObject(exitGame);
+	addEventHandler(exitGame);
 }
+
+MainMenuState::~MainMenuState() {}
 
 void MainMenuState::play(Game* g) {
 	g->getGSM()->pushState(new PlayState(g));
@@ -18,4 +24,9 @@ void MainMenuState::play(Game* g) {
 
 void MainMenuState::exit(Game* g) {
 	g->exit = true;
+}
+
+void MainMenuState::load(Game* g) {
+	g->getGSM()->pushState(new PlayState(g));
+	static_cast<PlayState*>(g->getGSM()->currentState())->loadGame("test.txt");
 }

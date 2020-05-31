@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <SDL.h>
 #include <SDL_image.h>
+#include "checkML.h"
 using namespace std;
 
 class ArrowsError : public logic_error {

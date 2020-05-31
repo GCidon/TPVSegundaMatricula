@@ -27,6 +27,9 @@ Game::~Game() {
 	for (int i = 0; i < NUM_TEXTURES; i++) delete texturas_[i];
 	for (int i = 0; i < 4; i++) delete backgrounds_[i];
 
+	delete gsm;
+	gsm = nullptr;
+
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
 	SDL_Quit();

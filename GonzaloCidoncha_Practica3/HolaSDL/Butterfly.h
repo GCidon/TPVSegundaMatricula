@@ -12,6 +12,7 @@ private:
 public:
 	Butterfly(double x, double y, double w, double h, Vector2D dir, Texture* texture, GameState* state) : ArrowsGameObject(x, y, dir.getX(), dir.getY(), w, h, 0, 0, texture, state) {
 		row = col = 1;
+		speed_ = 1;
 	}
 
 	~Butterfly();
