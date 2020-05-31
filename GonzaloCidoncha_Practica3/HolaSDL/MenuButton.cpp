@@ -12,7 +12,8 @@ bool MenuButton::handleEvent(SDL_Event const& evt) {
 
 		if (SDL_PointInRect(&p, &r)) {
 			cb_(g_);
+			return true;
 		}
 	}
-	return true;
+	return false;
 }

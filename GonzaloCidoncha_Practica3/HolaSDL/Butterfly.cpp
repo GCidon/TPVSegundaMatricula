@@ -28,6 +28,10 @@ void Butterfly::update() {
 	}
 }
 
-void Butterfly::loadFromFile(std::ifstream& file) {}
+void Butterfly::loadFromFile(std::ifstream& file) {
+	ArrowsGameObject::loadFromFile(file);
+}
 
-void Butterfly::saveToFile(std::ofstream& file) {}
+void Butterfly::saveToFile(std::ofstream& file) {
+	ArrowsGameObject::saveToFile(file);
+}

@@ -1,4 +1,5 @@
 #include "GameStateMachine.h"
+#include "GameState.h"
 
 GameStateMachine::~GameStateMachine() {
 	while (!gameStates_.empty())

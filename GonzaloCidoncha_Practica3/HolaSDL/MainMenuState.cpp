@@ -16,7 +16,9 @@ MainMenuState::MainMenuState(Game* g) : GameState(g) {
 	addEventHandler(exitGame);
 }
 
-MainMenuState::~MainMenuState() {}
+MainMenuState::~MainMenuState() {
+	int cosa = 1;
+}
 
 void MainMenuState::play(Game* g) {
 	g->getGSM()->pushState(new PlayState(g));

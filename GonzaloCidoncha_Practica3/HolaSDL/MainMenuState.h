@@ -15,6 +15,7 @@ public:
 	static void load(Game* g);
 	static void exit(Game* g);
 
+
 private:
 	MenuButton* newGame;
 	MenuButton* exitGame;

@@ -172,9 +172,6 @@ void PlayState::savePunt(string file) {
 }
 
 PlayState::~PlayState() {
-	delete score_;
-	score_ = nullptr;
-
 	arrows_.clear();
 	balloons_.clear();
 	butterflies_.clear();
@@ -209,7 +206,7 @@ void PlayState::saveGame(string file) {
 	ofstream f;
 	f.open(file);
 
-	f << level_;
+	f << level_ << endl;
 	f << score_->getPunt() << endl;
 	bow_->saveToFile(f);
 	f << endl;

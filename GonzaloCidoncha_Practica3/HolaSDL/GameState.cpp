@@ -23,8 +23,14 @@ void GameState::render() {
 }
 
 void GameState::handleEvents(SDL_Event evt) {
-	for (auto obj : eventHandlers_) 
-		obj->handleEvent(evt);
+	bool handled = false;
+	auto it = eventHandlers_.begin();
+	while (!handled && it != eventHandlers_.end())
+	{
+		if ((*it)->handleEvent(evt)) 
+			handled = true;
+		else ++it;
+	}
 }
 
 void GameState::addGameObject(SDLGameObject* obj)
